@@ -7,11 +7,8 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { Link } from "react-router-dom";
 import theme from "../../Theme/Theme";
 import { Input } from "@mui/material";
@@ -91,6 +88,11 @@ export default function Header() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                '& .MuiPaper-root': {
+                  width: '100%',
+                  boxShadow: 'none',
+                  left: 0,
+                },
               }}
             >
               {pages.map((page) => (
@@ -98,17 +100,18 @@ export default function Header() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-              <Input
-                defaultValue="Search..."
-                sx={{
-                  paddingLeft: "15px",
-                  display: { xs: "block", lg: "none" },
-                  "&::after": { borderBottom: "none" },
-                  "&::before": { borderBottom: "none" },
-                }}
-              ></Input>
+              <MenuItem>
+                <Input
+                  defaultValue="Search..."
+                  sx={{
+                    "&::after": { borderBottom: "none" },
+                    "&::before": { borderBottom: "none" },
+                  }}
+                />
+              </MenuItem>
             </Menu>
           </Box>
+
           <Typography
             variant="h5"
             noWrap
@@ -127,6 +130,7 @@ export default function Header() {
           >
             FASHION
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -168,18 +172,13 @@ export default function Header() {
                 <Input
                   defaultValue="Search..."
                   sx={{
-                    display: { xs: "none", lg: "block" },
+                    display: { xs: "none", md: "block" },
                     "&::after": { borderBottom: "none" },
                     "&::before": { borderBottom: "none" },
+                    "&:focus":{outline:'none !important'}
                   }}
                 ></Input>
               </Box>
-              {/* <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 1,fontSize:'30px' }}>
-                  <Avatar sx={{backgroundColor:theme.palette.primary.main}} alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <ShoppingBagIcon sx={{fontSize:'30px',color: theme.palette.primary.main}}/> */}
               <Button
                 sx={{ backgroundColor: theme.palette.primary.blackColor }}
               >

@@ -41,7 +41,7 @@ export default function Header() {
       position="static"
       sx={{ backgroundColor: "white", boxShadow: "none" }}
     >
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -51,8 +51,8 @@ export default function Header() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 800,
+              // fontFamily: "monospace",
+              fontWeight: 700,
               letterSpacing: "0",
               color: theme.palette.primary.blackColor,
               textDecoration: "none",

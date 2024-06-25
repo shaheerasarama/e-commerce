@@ -25,6 +25,7 @@ const theme = createTheme({
           margin: "0px auto",
           padding: "0px",
           width: "95%",
+          textAlign: 'left'
         },
       },
     },

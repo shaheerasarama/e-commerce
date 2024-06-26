@@ -14,14 +14,15 @@ export default function ProductCard({ product }) {
   return (
     <Card
       sx={{
-        maxWidth: 350,
+        // maxWidth: 350,
         boxShadow: "none",
         border: `1px solid ${theme.palette.primary.blackColor}`,
-        // margin:'auto'
+        // margin:' 0 auto',
+      // height:'fit-content'
       }}
     >
       <CardMedia
-        sx={{ height: 270 }}
+        sx={{ height: 300 }}
         image={product.thumbnail}
         title="green iguana"
       />

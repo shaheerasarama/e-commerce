@@ -12,8 +12,8 @@ export default function CategoryProducts({ productsData }) {
           gap: "15px",
         }}
       >
-        {productsData.map((product) => (
-          <ProductCard product={product} />
+        {productsData.map((product,index) => (
+          <ProductCard key={index} product={product} />
         ))}
       </Box>
     </Box>

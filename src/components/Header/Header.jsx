@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import theme from "../../Theme/Theme";
 import { Input } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import useApi from "../../Hooks/useApi";
 
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export default function Header() {
@@ -36,6 +36,14 @@ export default function Header() {
     setAnchorElUser(null);
   };
 
+  const [categories,setCategories] = useState([]);
+  let {data} = useApi(`https://dummyjson.com/products/categories`);
+  useEffect(()=>{
+    if(data){
+      setCategories(data.slice(0,6));
+    }
+  },[data]);
+  
   return (
     <AppBar
       position="static"
@@ -95,9 +103,9 @@ export default function Header() {
                 },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {categories.map((page) => (
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
               <MenuItem>
@@ -132,9 +140,10 @@ export default function Header() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {categories.map((page) => (
+              <Link to={`/category/${page.slug}`} style={{textDecoration:'none'}}>
               <Button
-                key={page}
+                key={page.id}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
@@ -143,8 +152,9 @@ export default function Header() {
                   fontWeight: "500",
                 }}
               >
-                {page}
+                {page.name}
               </Button>
+              </Link>
             ))}
           </Box>
 
@@ -167,7 +177,7 @@ export default function Header() {
                 }}
               >
                 <SearchIcon
-                  sx={{ color: "black", padding: "0 5px" }}
+                  sx={{ color: "black", padding: "0 5px",fontSize:'30px' }}
                 ></SearchIcon>
                 <Input
                   defaultValue="Search..."

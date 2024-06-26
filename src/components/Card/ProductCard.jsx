@@ -8,9 +8,14 @@ import Typography from "@mui/material/Typography";
 import theme from "../../Theme/Theme";
 import { Box } from "@mui/material";
 import ProductRating from "../ProductRating/ProductRating";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 export default function ProductCard({ product }) {
-  let discount = (product.price * product.discountPercentage) / 100;
-  // check for discount if exixt + stock + fav
+  let discount =
+    product.discountPercentage !== 0
+      ? product.price - (product.price * product.discountPercentage) / 100
+      : 0;
   return (
     <Card
       sx={{
@@ -18,13 +23,25 @@ export default function ProductCard({ product }) {
         boxShadow: "none",
         border: `1px solid ${theme.palette.primary.blackColor}`,
         // margin:' 0 auto',
-      // height:'fit-content'
+        position: "relative",
       }}
     >
+      {product.stock < 20 && (
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: theme.palette.primary.main,
+            padding: "5px 10px",
+            fontWeight: "500",
+          }}
+        >
+          only a few items left!
+        </Box>
+      )}
       <CardMedia
-        sx={{ height: 300 }}
+        sx={{ height: 300, width: "100%" }}
         image={product.thumbnail}
-        title="green iguana"
+        title={product.title}
       />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
@@ -35,10 +52,10 @@ export default function ProductCard({ product }) {
         </Typography>
         <Box
           sx={{
-            margin: "5px 0",
+            margin: "10px 0",
             display: "flex",
             alignItems: "center",
-            gap: "20px",
+            justifyContent: "space-between",
           }}
         >
           <ProductRating rating={product.rating} />
@@ -46,18 +63,37 @@ export default function ProductCard({ product }) {
             {product.reviews.length} Ratings
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <Typography sx={{ fontWeight: "bold" }}>
-            ${discount.toFixed(2)}
-          </Typography>
-          <Typography sx={{ textDecoration: "line-through" }}>
-            ${product.price}
-          </Typography>
-          <Typography sx={{ fontWeight: "bold", color: "red" }}>
-            {product.discountPercentage}% OFF
-          </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Typography
+              sx={{
+                textDecoration:
+                  product.discountPercentage !== 0 ? "line-through" : "none",
+              }}
+            >
+              ${product.price}
+            </Typography>
+            {product.discountPercentage !== 0 && (
+              <>
+                <Typography sx={{ fontWeight: "bold", color: "red" }}>
+                  {product.discountPercentage}% OFF
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  ${discount.toFixed(2)}
+                </Typography>
+              </>
+            )}
+          </Box>
+          <FavoriteBorderIcon />
+          {/* This icon will show in case that this product in user`s Wishlist */}
+          {/* <FavoriteIcon sx={{color:'#E72929'}}/> */}
         </Box>
-        {/* {product.stock < 20 ? <>Only a few items left. Grab yours now!</> : ''} */}
       </CardContent>
       {/* <CardActions>
         <Button size="small">Share</Button>

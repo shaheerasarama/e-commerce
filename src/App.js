@@ -11,7 +11,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Header />
-        <HeroImg />
         <Routes>
           <Route element={<Categories />} path="/category/:categoryName"></Route>
           {/* <Route element={<>not Found!</>} path="/*"></Route> */}

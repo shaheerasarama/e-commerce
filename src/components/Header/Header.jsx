@@ -103,8 +103,8 @@ export default function Header() {
                 },
               }}
             >
-              {categories.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+              {categories.map((page,index) => (
+                <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -140,8 +140,8 @@ export default function Header() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {categories.map((page) => (
-              <Link to={`/category/${page.slug}`} style={{textDecoration:'none'}}>
+            {categories.map((page,index) => (
+              <Link key={index} to={`/category/${page.slug}`} style={{textDecoration:'none'}}>
               <Button
                 key={page.id}
                 onClick={handleCloseNavMenu}

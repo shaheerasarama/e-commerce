@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
@@ -10,17 +10,38 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import ProductRating from "../../../components/ProductRating/ProductRating";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
 export default function ProductDescription({ product }) {
-  let discount =
+  const [minimumOrderQuantity, setMinimumOrderQuantity] = useState(1);
+  const [qtyMsg, setQtyMsg] = useState("");
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = product.images.length;
+
+  const discount =
     product.discountPercentage !== 0
       ? product.price - (product.price * product.discountPercentage) / 100
       : 0;
-  const images = product.images;
 
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const HandleqtyChange = (qtyChange) => {
+    if (qtyChange < 1 || qtyChange > product.minimumOrderQuantity) {
+      setQtyMsg(
+        `You can't add more than ${product.minimumOrderQuantity} of this product`
+      );
+      setTimeout(() => {
+        setQtyMsg("");
+      }, 3000);
+    } else {
+      setMinimumOrderQuantity(qtyChange);
+    }
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -33,6 +54,7 @@ export default function ProductDescription({ product }) {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+
   return (
     <Box sx={{ margin: "30px 0px" }}>
       <Grid container spacing={2}>
@@ -54,7 +76,7 @@ export default function ProductDescription({ product }) {
               onChangeIndex={handleStepChange}
               enableMouseEvents
             >
-              {images.map((img, index) => (
+              {product.images.map((img, index) => (
                 <div key={index}>
                   {Math.abs(activeStep - index) <= 2 ? (
                     <Box
@@ -67,6 +89,7 @@ export default function ProductDescription({ product }) {
                         width: "100%",
                       }}
                       src={img}
+                      alt={`product image ${index}`}
                     />
                   ) : null}
                 </div>
@@ -170,9 +193,10 @@ export default function ProductDescription({ product }) {
             >
               {product.tags.map((tag, index) => (
                 <Typography
+                  key={index}
                   sx={{
                     backgroundColor: theme.palette.primary.main,
-                    padding: "5px",
+                    padding: "5px 10px",
                     borderRadius: "8px",
                     textTransform: "capitalize",
                     fontWeight: "500",
@@ -196,6 +220,114 @@ export default function ProductDescription({ product }) {
                 Only a few items left!
               </Typography>
             )}
+          </Box>
+          <Box sx={{ margin: "12px 0" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+              <Typography
+                variant="subtitle"
+                component="p"
+                sx={{ fontWeight: "500" }}
+              >
+                Quantity :
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  border: "1px solid black",
+                  width: "18%",
+                }}
+              >
+                <RemoveIcon
+                  onClick={() => HandleqtyChange(minimumOrderQuantity - 1)}
+                />
+                <input
+                  type="text"
+                  value={minimumOrderQuantity}
+                  style={{ border: "none", width: "100%", textAlign: "center" }}
+                  readOnly
+                />
+                <AddIcon
+                  onClick={() => HandleqtyChange(minimumOrderQuantity + 1)}
+                />
+              </Box>
+            </Box>
+            <Typography
+              variant="subtitle"
+              component="p"
+              sx={{
+                color: theme.palette.primary.errorColor,
+                fontWeight: "500",
+                margin: "12px 0",
+              }}
+            >
+              {qtyMsg}
+            </Typography>
+            <Box sx={{ margin: "20px 0", display: "flex", gap: "10px" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  backgroundColor: theme.palette.primary.blackColor,
+                  color: "white",
+                  boxShadow: "none",
+                  '&:hover':{
+                      backgroundColor:theme.palette.primary.blackColor,
+                      color:'white'
+            
+                  }
+                }}
+              >
+                <ShoppingBagIcon sx={{ fontSize: "20px" }} />
+                <Typography
+                  variant="subtitle"
+                  component="span"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  add to cart
+                </Typography>
+              </Button>
+
+              <Button
+                variant="contained"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  backgroundColor: "transparent",
+                  color: "black",
+                  boxShadow: "none",
+                  border: "1px solid black",
+                  '&:hover':{
+                      backgroundColor:theme.palette.primary.main,
+                      color:'white',
+                      boxShadow:'none'
+            
+                  }
+                }}
+              >
+                {/* Add FavoriteIcon if this product on user favs */}
+                <FavoriteBorderIcon sx={{ fontSize: "20px" }} />
+                <Typography
+                  variant="subtitle"
+                  component="span"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  add to wishlist
+                </Typography>
+              </Button>
+            </Box>
           </Box>
         </Grid>
       </Grid>

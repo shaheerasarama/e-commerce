@@ -10,7 +10,6 @@ import { Box } from "@mui/material";
 import ProductRating from "../ProductRating/ProductRating";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
 export default function ProductCard({ product }) {
   let discount =
     product.discountPercentage !== 0

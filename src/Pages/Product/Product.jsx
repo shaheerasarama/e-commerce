@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import useApi from "../../Hooks/useApi";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import ProductReviews from "./ProductReviews/ProductReviews";
 export default function Product() {
   let { id } = useParams();
   let { data } = useApi(`https://dummyjson.com/products/${id}`);
@@ -26,7 +27,7 @@ export default function Product() {
       ) : (
         <>
           <ProductDescription product={product}/>
-          <>Reviews</>
+          <ProductReviews product={product}/>
         </>
       )}
     </Container>

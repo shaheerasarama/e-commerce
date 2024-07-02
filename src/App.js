@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Categories from "./Pages/Categories/Categories";
 import { Route, Routes } from "react-router-dom";
 import HeroImg from "./components/HeroImg/HeroImg";
+import Product from "./Pages/Product/Product";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route element={<Categories />} path="/category/:categoryName"></Route>
           {/* <Route element={<>not Found!</>} path="/*"></Route> */}
+          <Route element={<Product />} path="/product/:id"></Route>
         </Routes>
         <Footer />
       </div>

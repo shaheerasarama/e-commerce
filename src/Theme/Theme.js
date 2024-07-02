@@ -7,7 +7,8 @@ const theme = createTheme({
       blackColor: '#000', 
       whiteColor: '#FFF',
       textColor:'#8E8E8E',
-      greyColor:'#D9D9D9'
+      greyColor:'#D9D9D9',
+      errorColor:'#B00020'
     },
   },
   typography: {

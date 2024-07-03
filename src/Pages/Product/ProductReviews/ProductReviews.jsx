@@ -5,8 +5,9 @@ import "./ProductReviews.module.css";
 import theme from "./../../../Theme/Theme";
 import { Box, Typography } from "@mui/material";
 import ProductRating from "../../../components/ProductRating/ProductRating";
+import ProductCard from "../../../components/Card/ProductCard";
 
-export default function ProductReviews({ product }) {
+export default function ProductReviews({ product, relatedProducts }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const handleTabSelect = (index) => {
     setSelectedIndex(index);
@@ -24,6 +25,7 @@ export default function ProductReviews({ product }) {
           backgroundColor: theme.palette.primary.blackColor,
           padding: "10px",
           borderRadius: "5px",
+          display:'flex',
         }}
       >
         <Tab
@@ -39,7 +41,7 @@ export default function ProductReviews({ product }) {
             color: selectedIndex === 0 ? "black" : "white",
           }}
         >
-          product description
+          ratings and reviews
         </Tab>
 
         <Tab
@@ -57,28 +59,11 @@ export default function ProductReviews({ product }) {
         >
           related products
         </Tab>
-
-        <Tab
-          style={{
-            border: "none",
-            outline: "none",
-            textTransform: "capitalize",
-            cursor: "pointer",
-            fontWeight: "500",
-            backgroundColor:
-              selectedIndex === 2 ? theme.palette.primary.main : "",
-            borderRadius: selectedIndex === 2 ? "5px" : "",
-            color: selectedIndex === 2 ? "black" : "white",
-          }}
-        >
-          ratings and reviews
-        </Tab>
       </TabList>
-      <TabPanel style={{ padding: "10px" }}>{product.description}</TabPanel>
-      <TabPanel style={{ padding: "10px" }}>h1</TabPanel>
+
       <TabPanel style={{ padding: "10px" }}>
         <Box>
-          {product.reviews.map((review,index) => (
+          {product.reviews.map((review, index) => (
             <Box
               sx={{
                 display: "flex",
@@ -108,6 +93,20 @@ export default function ProductReviews({ product }) {
                 </Typography>
               </Box>
             </Box>
+          ))}
+        </Box>
+      </TabPanel>
+
+      <TabPanel style={{ padding: "10px" }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr))",
+            gap: "15px",
+          }}
+        >
+          {relatedProducts.map((relatedProduct, index) => (
+            <ProductCard key={index} product={relatedProduct} />
           ))}
         </Box>
       </TabPanel>

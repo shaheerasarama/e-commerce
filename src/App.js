@@ -5,7 +5,6 @@ import theme from "./Theme/Theme";
 import { ThemeProvider } from "@mui/material/styles";
 import Categories from "./Pages/Categories/Categories";
 import { Route, Routes } from "react-router-dom";
-import HeroImg from "./components/HeroImg/HeroImg";
 import Product from "./Pages/Product/Product";
 function App() {
   return (
@@ -13,9 +12,9 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route element={<Categories />} path="/category/:categoryName"></Route>
+          <Route element={<Categories />} path="/:categoryName"></Route>
           {/* <Route element={<>not Found!</>} path="/*"></Route> */}
-          <Route element={<Product />} path="/product/:id"></Route>
+          <Route element={<Product />} path="/:categorName/:id"></Route>
         </Routes>
         <Footer />
       </div>

@@ -10,12 +10,14 @@ import { Box } from "@mui/material";
 import ProductRating from "../ProductRating/ProductRating";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Link } from "react-router-dom";
 export default function ProductCard({ product }) {
   let discount =
     product.discountPercentage !== 0
       ? product.price - (product.price * product.discountPercentage) / 100
       : 0;
   return (
+    <Link style={{textDecoration:'none'}} to={`/${product.category}/${product.id}`}>
     <Card
       sx={{
         // maxWidth: 350,
@@ -23,6 +25,7 @@ export default function ProductCard({ product }) {
         border: `1px solid ${theme.palette.primary.blackColor}`,
         // margin:' 0 auto',
         position: "relative",
+        height:'100%'
       }}
     >
       {product.stock < 20 && (
@@ -99,5 +102,6 @@ export default function ProductCard({ product }) {
         <Button size="small">Learn More</Button>
       </CardActions> */}
     </Card>
+    </Link>
   );
 }

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import CategoryProducts from "./CategoryProducts/CategoryProducts";
 import { useParams } from "react-router-dom";
 import useApi from "../../Hooks/useApi";
-import theme from "../../Theme/Theme";
 import HeroImg from "./../../components/HeroImg/HeroImg";
 export default function Categories() {
   let { categoryName } = useParams();

@@ -141,7 +141,7 @@ export default function Header() {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {categories.map((page,index) => (
-              <Link key={index} to={`/category/${page.slug}`} style={{textDecoration:'none'}}>
+              <Link key={index} to={`/${page.slug}`} style={{textDecoration:'none'}}>
               <Button
                 key={page.id}
                 onClick={handleCloseNavMenu}
@@ -227,6 +227,7 @@ export default function Header() {
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
+
               ))}
             </Menu>
           </Box>

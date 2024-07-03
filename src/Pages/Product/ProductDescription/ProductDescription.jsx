@@ -236,7 +236,7 @@ export default function ProductDescription({ product }) {
                   alignItems: "center",
                   gap: "8px",
                   border: "1px solid black",
-                  width: "18%",
+                  width: "100px",
                 }}
               >
                 <RemoveIcon
@@ -264,7 +264,7 @@ export default function ProductDescription({ product }) {
             >
               {qtyMsg}
             </Typography>
-            <Box sx={{ margin: "20px 0", display: "flex", gap: "10px" }}>
+            <Box sx={{ margin: "20px 0", display: "flex", gap: "20px" }}>
               <Button
                 variant="contained"
                 sx={{
@@ -274,13 +274,14 @@ export default function ProductDescription({ product }) {
                   backgroundColor: theme.palette.primary.blackColor,
                   color: "white",
                   boxShadow: "none",
-                  '&:hover':{
-                      backgroundColor:theme.palette.primary.blackColor,
-                      color:'white'
-            
-                  }
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.blackColor,
+                    color: "white",
+                  },
+                  textWrap: "nowrap",
                 }}
               >
+                {/* Add remove from cart if this product on user cart */}
                 <ShoppingBagIcon sx={{ fontSize: "20px" }} />
                 <Typography
                   variant="subtitle"
@@ -305,12 +306,12 @@ export default function ProductDescription({ product }) {
                   color: "black",
                   boxShadow: "none",
                   border: "1px solid black",
-                  '&:hover':{
-                      backgroundColor:theme.palette.primary.main,
-                      color:'white',
-                      boxShadow:'none'
-            
-                  }
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.main,
+                    color: "white",
+                    boxShadow: "none",
+                  },
+                  textWrap: "nowrap",
                 }}
               >
                 {/* Add FavoriteIcon if this product on user favs */}

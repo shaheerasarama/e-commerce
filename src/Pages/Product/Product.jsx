@@ -8,13 +8,23 @@ import Stack from "@mui/material/Stack";
 import ProductReviews from "./ProductReviews/ProductReviews";
 export default function Product() {
   let { id } = useParams();
+  let { categorName } = useParams();
   let { data } = useApi(`https://dummyjson.com/products/${id}`);
+  let { data: categoriesProducts } = useApi(
+    `https://dummyjson.com/products/category/${categorName}`
+  );
   let [product, setProduct] = useState(null);
+  let [relatedProducts, setRelatedProducts] = useState(null);
   useEffect(() => {
-    if (data !== null) {
+    if (data !== null && categoriesProducts !== null) {
       setProduct(data);
+      setRelatedProducts(
+        categoriesProducts.products
+          .filter((prod) => prod.id !== parseInt(id))
+          .slice(0, 4)
+      );
     }
-  }, [data]);
+  }, [data, categoriesProducts, id]);
   return (
     <Container>
       {product === null ? (
@@ -26,8 +36,8 @@ export default function Product() {
         </Stack>
       ) : (
         <>
-          <ProductDescription product={product}/>
-          <ProductReviews product={product}/>
+          <ProductDescription product={product} />
+          <ProductReviews product={product} relatedProducts={relatedProducts} />
         </>
       )}
     </Container>

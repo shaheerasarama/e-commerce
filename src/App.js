@@ -13,8 +13,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route element={<Categories />} path="/
-          :categoryName"></Route>
+          <Route element={<Categories />} path="/:categoryName"></Route>
           {/* <Route element={<>not Found!</>} path="/*"></Route> */}
           <Route element={<Product />} path="/:categorName/:id"></Route>
           <Route element={<Products />} path="/products"></Route>

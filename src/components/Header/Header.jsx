@@ -36,14 +36,14 @@ export default function Header() {
     setAnchorElUser(null);
   };
 
-  const [categories,setCategories] = useState([]);
-  let {data} = useApi(`https://dummyjson.com/products/categories`);
-  useEffect(()=>{
-    if(data){
-      setCategories(data.slice(0,6));
+  const [categories, setCategories] = useState([]);
+  let { data } = useApi(`https://dummyjson.com/products/categories`);
+  useEffect(() => {
+    if (data) {
+      setCategories(data.slice(0, 6));
     }
-  },[data]);
-  
+  }, [data]);
+
   return (
     <AppBar
       position="static"
@@ -96,19 +96,19 @@ export default function Header() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                '& .MuiPaper-root': {
-                  width: '100%',
-                  boxShadow: 'none',
+                "& .MuiPaper-root": {
+                  width: "100%",
+                  boxShadow: "none",
                   left: 0,
                 },
               }}
             >
-              {categories.map((page,index) => (
+              {categories.map((page, index) => (
                 <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
-              <MenuItem>
+              {/* <MenuItem>
                 <Input
                   defaultValue="Search..."
                   sx={{
@@ -116,7 +116,7 @@ export default function Header() {
                     "&::before": { borderBottom: "none" },
                   }}
                 />
-              </MenuItem>
+              </MenuItem> */}
             </Menu>
           </Box>
 
@@ -140,20 +140,24 @@ export default function Header() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {categories.map((page,index) => (
-              <Link key={index} to={`/${page.slug}`} style={{textDecoration:'none'}}>
-              <Button
-                key={page.id}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: theme.palette.primary.blackColor,
-                  display: "block",
-                  fontWeight: "500",
-                }}
+            {categories.map((page, index) => (
+              <Link
+                key={index}
+                to={`/${page.slug}`}
+                style={{ textDecoration: "none" }}
               >
-                {page.name}
-              </Button>
+                <Button
+                  key={page.id}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: theme.palette.primary.blackColor,
+                    display: "block",
+                    fontWeight: "500",
+                  }}
+                >
+                  {page.name}
+                </Button>
               </Link>
             ))}
           </Box>
@@ -166,7 +170,7 @@ export default function Header() {
                 justifyContent: "space-between",
               }}
             >
-              <Box
+              {/* <Box
                 sx={{
                   marginRight: "10px",
                   backgroundColor: "#F1F1F1",
@@ -188,7 +192,7 @@ export default function Header() {
                     "&:focus":{outline:'none !important'}
                   }}
                 ></Input>
-              </Box>
+              </Box> */}
               <Button
                 sx={{ backgroundColor: theme.palette.primary.blackColor }}
               >
@@ -227,7 +231,6 @@ export default function Header() {
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-
               ))}
             </Menu>
           </Box>

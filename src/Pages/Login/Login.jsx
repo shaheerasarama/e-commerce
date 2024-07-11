@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +14,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "../../Theme/Theme";
-
+import axios from "axios";
+import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../Contexts/UserContext";
 function Copyright(props) {
   return (
     <Typography
@@ -37,13 +41,42 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  let { isLogin, setIsLogin } = useUserContext();
+  let navigate = useNavigate();
+  const [user, setUser] = useState({ userName: "", password: "" });
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    isLogin && navigate("/products");
+  }, [isLogin]);
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const userData = {
+      userName: data.get("userName"),
       password: data.get("password"),
-    });
+    };
+    setUser(userData);
+
+    try {
+      let response = await axios.post(
+        `https://dummyjson.com/auth/login`,
+        {
+          username: userData.userName,
+          password: userData.password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      localStorage.setItem("userToken", JSON.stringify(response.data.token));
+      setIsLogin(true);
+      navigate("/products");
+    } catch (error) {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+    }
   };
 
   return (
@@ -85,10 +118,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="userName"
+                label="User Name"
+                name="userName"
+                autoComplete="userName"
                 autoFocus
               />
               <TextField
@@ -118,6 +151,7 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
+
               <Grid container>
                 <Grid item xs>
                   <Link
@@ -145,6 +179,11 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
+              {error ? (
+                <Alert severity="error">This is an error Alert.</Alert>
+              ) : (
+                ""
+              )}
             </Box>
           </Box>
         </Grid>

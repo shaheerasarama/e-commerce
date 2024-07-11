@@ -8,19 +8,24 @@ import { Route, Routes } from "react-router-dom";
 import Product from "./Pages/Product/Product";
 import Products from "./Pages/Products/Products";
 import SignInSide from "./Pages/Login/Login";
+import { Home } from "@mui/icons-material";
+import UserContext from "./Contexts/UserContext";
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Header />
-        <Routes>
-          <Route element={<Categories />} path="/:categoryName"></Route>
-          {/* <Route element={<>not Found!</>} path="/*"></Route> */}
-          <Route element={<Product />} path="/:categorName/:id"></Route>
-          <Route element={<Products />} path="/products"></Route>
-          <Route element={<SignInSide />} path="/login"></Route>
-        </Routes>
-        <Footer />
+        <UserContext>
+          <Header />
+          <Routes>
+            <Route element={<Home />} path="/"></Route>
+            <Route element={<Categories />} path="/:categoryName"></Route>
+            {/* <Route element={<>not Found!</>} path="/*"></Route> */}
+            <Route element={<Product />} path="/:categorName/:id"></Route>
+            <Route element={<Products />} path="/products"></Route>
+            <Route element={<SignInSide />} path="/login"></Route>
+          </Routes>
+          <Footer />
+        </UserContext>
       </div>
     </ThemeProvider>
   );

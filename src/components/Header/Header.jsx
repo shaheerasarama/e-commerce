@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,16 +11,15 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import theme from "../../Theme/Theme";
-import { Input } from "@mui/material";
+import { Avatar, Input, Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useApi from "../../Hooks/useApi";
-
+import { useUserContext } from "../../Contexts/UserContext";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  let {isLogin, userLogOut} = useUserContext();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -43,7 +42,6 @@ export default function Header() {
       setCategories(data.slice(0, 6));
     }
   }, [data]);
-
   return (
     <AppBar
       position="static"
@@ -193,23 +191,41 @@ export default function Header() {
                   }}
                 ></Input>
               </Box> */}
-              <Button
-                sx={{ backgroundColor: theme.palette.primary.blackColor }}
-              >
-                {" "}
-                <Link
-                  style={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    fontWeight: "600",
-                    textDecoration: "none",
-                    textTransform: "capitalize",
+              {!isLogin && (
+                <Button
+                  sx={{
+                    backgroundColor: theme.palette.primary.blackColor,
+                    ":hover": {
+                      backgroundColor: "black !important",
+                    },
                   }}
                 >
-                  Login
-                </Link>{" "}
-              </Button>
+                  <Link
+                    to={"/login"}
+                    style={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontWeight: "600",
+                      textDecoration: "none",
+                      textTransform: "capitalize",
+                      ":&hover": { backgroundColor: "red !important" },
+                    }}
+                  >
+                    Login
+                  </Link>
+                </Button>
+              )}
+              {isLogin && (
+                <Tooltip title="Open Profile">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt={"getUserInfo().firstName"}
+                      src={''}
+                    />
+                  </IconButton>
+                </Tooltip>
+              )}
             </Box>
             <Menu
               sx={{ mt: "45px" }}
@@ -229,7 +245,7 @@ export default function Header() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Link sx={{textDecoration:'none'}} onClick={()=>userLogOut()}><Typography sx={{textDecoration:'none',color:theme.palette.primary.blackColor}} textAlign="center">{setting}</Typography></Link>
                 </MenuItem>
               ))}
             </Menu>

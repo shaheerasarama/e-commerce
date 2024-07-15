@@ -63,12 +63,14 @@ export default function SignInSide() {
         {
           username: userData.userName,
           password: userData.password,
+          expiresInMins:1
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
       localStorage.setItem("userToken", JSON.stringify(response.data.token));
+      localStorage.setItem("userRefreshToken", JSON.stringify(response.data.refreshToken));
       setIsLogin(true);
       navigate("/products");
     } catch (error) {

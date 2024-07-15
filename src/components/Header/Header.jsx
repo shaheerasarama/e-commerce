@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,7 +19,9 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let {isLogin, userLogOut} = useUserContext();
+  let { isLogin, userLogOut, userInfo } = useUserContext();
+
+  // useEffect(()=>{console.log(userInfo)},[userInfo])
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -216,13 +218,15 @@ export default function Header() {
                   </Link>
                 </Button>
               )}
-              {isLogin && (
+              {isLogin && userInfo && (
                 <Tooltip title="Open Profile">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt={"getUserInfo().firstName"}
-                      src={''}
-                    />
+                      alt={userInfo.firstName}
+                      src={userInfo.image || undefined}
+                    >
+                      {!userInfo.image && userInfo.firstName.charAt(0)}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
               )}
@@ -245,7 +249,20 @@ export default function Header() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Link sx={{textDecoration:'none'}} onClick={()=>userLogOut()}><Typography sx={{textDecoration:'none',color:theme.palette.primary.blackColor}} textAlign="center">{setting}</Typography></Link>
+                  <Link
+                    sx={{ textDecoration: "none" }}
+                    onClick={() => userLogOut()}
+                  >
+                    <Typography
+                      sx={{
+                        textDecoration: "none",
+                        color: theme.palette.primary.blackColor,
+                      }}
+                      textAlign="center"
+                    >
+                      {setting}
+                    </Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>

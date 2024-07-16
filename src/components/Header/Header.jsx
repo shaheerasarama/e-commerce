@@ -19,9 +19,8 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let { isLogin, userLogOut, userInfo } = useUserContext();
+  let { isLogin, userLogOut, userInfo, userCart } = useUserContext();
 
-  // useEffect(()=>{console.log(userInfo)},[userInfo])
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

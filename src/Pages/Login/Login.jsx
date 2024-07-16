@@ -31,7 +31,6 @@ function Copyright(props) {
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -71,6 +70,7 @@ export default function SignInSide() {
       );
       localStorage.setItem("userToken", JSON.stringify(response.data.token));
       localStorage.setItem("userRefreshToken", JSON.stringify(response.data.refreshToken));
+      localStorage.setItem("userId",response.data.id);
       setIsLogin(true);
       navigate("/products");
     } catch (error) {

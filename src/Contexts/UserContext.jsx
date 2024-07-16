@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import useApi from "../Hooks/useApi";
 let userContext = createContext(null);
 
 export default function UserContext({ children }) {
@@ -66,6 +66,17 @@ export default function UserContext({ children }) {
     setIsLogin(true);
   };
 
+  const userCart = async()=>{
+    if(isLogin){
+      let id = localStorage.getItem('userId');
+      let response = await axios.get(`https://dummyjson.com/carts/user/${id}`);
+      console.log(response.data.carts)
+    }
+    else{
+      return null;
+    }
+  }
+
   const userLogOut = () => {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userRefreshToken");
@@ -88,6 +99,7 @@ export default function UserContext({ children }) {
           userLogOut,
           getUserData,
           userInfo,
+          userCart
         }}
       >
         {children}

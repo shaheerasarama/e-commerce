@@ -15,7 +15,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import { useUserContext } from "../../../Contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export default function ProductDescription({ product }) {
@@ -23,6 +24,8 @@ export default function ProductDescription({ product }) {
   const [qtyMsg, setQtyMsg] = useState("");
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
+  let { isLogin, addToCart } = useUserContext();
+  let navigate = useNavigate();
   const maxSteps = product.images.length;
 
   const discount =
@@ -279,6 +282,14 @@ export default function ProductDescription({ product }) {
                     color: "white",
                   },
                   textWrap: "nowrap",
+                }}
+                onClick={() => {
+                  if (!isLogin) {
+                    navigate("/login");
+                  }
+                  else{
+                    addToCart(product,minimumOrderQuantity,product.minimumOrderQuantity)
+                  }
                 }}
               >
                 {/* Add remove from cart if this product on user cart */}

@@ -8,6 +8,11 @@ export default function UserContext({ children }) {
   const [isLogin, setIsLogin] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  let [userCart, setUserCart] = useState(
+    localStorage.getItem("userCart")
+      ? JSON.parse(localStorage.getItem("userCart"))
+      : []
+  );
 
   let navigate = useNavigate();
 
@@ -23,6 +28,10 @@ export default function UserContext({ children }) {
     };
     initializeUser();
   }, [isLogin]);
+
+  useEffect(() => {
+    localStorage.setItem("userCart", JSON.stringify(userCart));
+  }, [userCart]);
 
   const getUserData = async () => {
     if (isLogin) {
@@ -66,16 +75,35 @@ export default function UserContext({ children }) {
     setIsLogin(true);
   };
 
-  const userCart = async()=>{
-    if(isLogin){
-      let id = localStorage.getItem('userId');
-      let response = await axios.get(`https://dummyjson.com/carts/user/${id}`);
-      console.log(response.data.carts)
+  // const userCart = async () => {
+  //   if (isLogin) {
+  //     let id = localStorage.getItem("userId");
+  //     let response = await axios.get(`https://dummyjson.com/carts/user/${id}`);
+  //     console.log(response.data.carts);
+  //   } else {
+  //     return null;
+  //   }
+  // };
+
+  const addToCart = (product, qty, productMinimumOrderQuantity) => {
+    let duplicatedProduct = userCart.find(
+      (prod) => prod.product.id === product.id
+    );
+    if (!duplicatedProduct) {
+      setUserCart([...userCart, { product, qty: qty }]);
+    } else {
+      if (duplicatedProduct.qty + qty > productMinimumOrderQuantity) {
+        console.log("you Can not add more in this order");
+      } else {
+        let updateProduct = userCart.map((prod) =>
+          prod.product.id === product.id
+            ? { ...prod, qty: prod.qty + qty }
+            : prod
+        );
+        setUserCart(updateProduct);
+      }
     }
-    else{
-      return null;
-    }
-  }
+  };
 
   const userLogOut = () => {
     localStorage.removeItem("userToken");
@@ -99,7 +127,7 @@ export default function UserContext({ children }) {
           userLogOut,
           getUserData,
           userInfo,
-          userCart
+          addToCart,
         }}
       >
         {children}
@@ -115,6 +143,7 @@ export default function UserContext({ children }) {
           userLogOut,
           getUserData,
           userInfo,
+          addToCart,
         }}
       >
         {children}

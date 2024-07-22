@@ -36,6 +36,7 @@ export default function Product() {
         </Stack>
       ) : (
         <>
+          {/* there is an error in console in this componete */}
           <ProductDescription product={product} />
           <ProductReviews product={product} relatedProducts={relatedProducts} />
         </>

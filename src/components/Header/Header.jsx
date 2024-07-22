@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import theme from "../../Theme/Theme";
 import { Avatar, Input, Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 import useApi from "../../Hooks/useApi";
 import { useUserContext } from "../../Contexts/UserContext";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -218,16 +219,38 @@ export default function Header() {
                 </Button>
               )}
               {isLogin && userInfo && (
-                <Tooltip title="Open Profile">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt={userInfo.firstName}
-                      src={userInfo.image || undefined}
-                    >
-                      {!userInfo.image && userInfo.firstName.charAt(0)}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
+                <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <Link sx={{ textDecoration: "none" }}>
+                    <Box sx={{ position: "relative" }}>
+                      <LocalMallIcon
+                        sx={{ fontSize: "30px", color: "black" }}
+                      />
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: "-5px",
+                          right: "0",
+                          backgroundColor: theme.palette.primary.main,
+                          borderRadius: "50%",
+                          padding: "2px",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {userCart.length}
+                      </Box>
+                    </Box>
+                  </Link>
+                  <Tooltip title="Open Profile">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt={userInfo.firstName}
+                        src={userInfo.image || undefined}
+                      >
+                        {!userInfo.image && userInfo.firstName.charAt(0)}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               )}
             </Box>
             <Menu

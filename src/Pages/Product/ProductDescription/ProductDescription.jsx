@@ -24,7 +24,7 @@ export default function ProductDescription({ product }) {
   const [qtyMsg, setQtyMsg] = useState("");
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  let { isLogin, addToCart } = useUserContext();
+  let { isLogin, addToCart, removeFromCart, updateFromCart } = useUserContext();
   let navigate = useNavigate();
   const maxSteps = product.images.length;
 
@@ -286,9 +286,14 @@ export default function ProductDescription({ product }) {
                 onClick={() => {
                   if (!isLogin) {
                     navigate("/login");
-                  }
-                  else{
-                    addToCart(product,minimumOrderQuantity,product.minimumOrderQuantity)
+                  } else {
+                    addToCart(
+                      product,
+                      minimumOrderQuantity,
+                      product.minimumOrderQuantity
+                    );
+                    // removeFromCart(product)
+                    // updateFromCart(product,1)
                   }
                 }}
               >

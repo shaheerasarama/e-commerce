@@ -13,6 +13,7 @@ export default function UserContext({ children }) {
       ? JSON.parse(localStorage.getItem("userCart"))
       : []
   );
+  // console.log(userCart.length)
 
   let navigate = useNavigate();
 
@@ -105,6 +106,26 @@ export default function UserContext({ children }) {
     }
   };
 
+  const removeFromCart = (product) => {
+    let removedProduct = userCart.findIndex(
+      (cart) => cart.product.id === product.id
+    );
+    if (removeFromCart !== -1) {
+      userCart.splice(removedProduct, 1);
+      localStorage.setItem("userCart", JSON.stringify(userCart));
+    }
+  };
+
+  const updateFromCart = (product, qty) => {
+    let removedProduct = userCart.findIndex(
+      (cart) => cart.product.id === product.id
+    );
+    if (removeFromCart !== -1) {
+      userCart[removedProduct].qty = qty;
+      localStorage.setItem("userCart", JSON.stringify(userCart));
+    }
+  };
+
   const userLogOut = () => {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userRefreshToken");
@@ -127,7 +148,10 @@ export default function UserContext({ children }) {
           userLogOut,
           getUserData,
           userInfo,
+          userCart,
           addToCart,
+          removeFromCart,
+          updateFromCart,
         }}
       >
         {children}

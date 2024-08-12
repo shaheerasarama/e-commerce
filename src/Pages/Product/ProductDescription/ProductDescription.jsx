@@ -33,7 +33,7 @@ export default function ProductDescription({ product }) {
       ? product.price - (product.price * product.discountPercentage) / 100
       : 0;
 
-  const HandleqtyChange = (qtyChange) => {
+  const HandleQtyChange = (qtyChange) => {
     if (qtyChange < 1 || qtyChange > product.minimumOrderQuantity) {
       setQtyMsg(
         `You can't add more than ${product.minimumOrderQuantity} of this product`
@@ -243,7 +243,7 @@ export default function ProductDescription({ product }) {
                 }}
               >
                 <RemoveIcon
-                  onClick={() => HandleqtyChange(minimumOrderQuantity - 1)}
+                  onClick={() => HandleQtyChange(minimumOrderQuantity - 1)}
                 />
                 <input
                   type="text"
@@ -252,7 +252,7 @@ export default function ProductDescription({ product }) {
                   readOnly
                 />
                 <AddIcon
-                  onClick={() => HandleqtyChange(minimumOrderQuantity + 1)}
+                  onClick={() => HandleQtyChange(minimumOrderQuantity + 1)}
                 />
               </Box>
             </Box>

@@ -8,10 +8,10 @@ import Stack from "@mui/material/Stack";
 import ProductReviews from "./ProductReviews/ProductReviews";
 export default function Product() {
   let { id } = useParams();
-  let { categorName } = useParams();
+  let { categoryName } = useParams();
   let { data } = useApi(`https://dummyjson.com/products/${id}`);
   let { data: categoriesProducts } = useApi(
-    `https://dummyjson.com/products/category/${categorName}`
+    `https://dummyjson.com/products/category/${categoryName}`
   );
   let [product, setProduct] = useState(null);
   let [relatedProducts, setRelatedProducts] = useState(null);
@@ -36,7 +36,7 @@ export default function Product() {
         </Stack>
       ) : (
         <>
-          {/* there is an error in console in this componete */}
+          {/* there is an error in console in this component */}
           <ProductDescription product={product} />
           <ProductReviews product={product} relatedProducts={relatedProducts} />
         </>

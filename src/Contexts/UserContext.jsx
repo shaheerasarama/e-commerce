@@ -32,6 +32,7 @@ export default function UserContext({ children }) {
 
   useEffect(() => {
     localStorage.setItem("userCart", JSON.stringify(userCart));
+    console.log("userCart has changed");
   }, [userCart]);
 
   const getUserData = async () => {
@@ -107,22 +108,23 @@ export default function UserContext({ children }) {
   };
 
   const removeFromCart = (product) => {
-    let removedProduct = userCart.findIndex(
-      (cart) => cart.product.id === product.id
+    const updatedCart = userCart.filter(
+      (cartItem) => cartItem.product.id !== product.id
     );
-    if (removeFromCart !== -1) {
-      userCart.splice(removedProduct, 1);
-      localStorage.setItem("userCart", JSON.stringify(userCart));
-    }
+    setUserCart(updatedCart);
   };
 
   const updateFromCart = (product, qty) => {
-    let removedProduct = userCart.findIndex(
+    let updatedProduct = userCart.findIndex(
       (cart) => cart.product.id === product.id
     );
-    if (removeFromCart !== -1) {
-      userCart[removedProduct].qty = qty;
-      localStorage.setItem("userCart", JSON.stringify(userCart));
+    if (updatedProduct !== -1) {
+      let updateProduct = userCart.map((prod) =>
+        prod.product.id === product.id
+          ? { ...prod, qty: prod.qty + (qty - prod.qty) }
+          : prod
+      );
+      setUserCart(updateProduct);
     }
   };
 
@@ -168,6 +170,7 @@ export default function UserContext({ children }) {
           getUserData,
           userInfo,
           addToCart,
+          userCart,
         }}
       >
         {children}

@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Box, TableCell, TableRow, Button, Typography } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import theme from "../../Theme/Theme";
-import { useUserContext } from "../../Contexts/UserContext";
-
+import theme from "../../../Theme/Theme";
+import { useUserContext } from "../../../Contexts/UserContext";
 export default function ProductTableRow({ singleProduct, setQtyMsg }) {
   let { updateFromCart, removeFromCart } = useUserContext();
   let [productQty, setProductQty] = useState(singleProduct.qty);
   let [productQtyChange, setProductQtyChange] = useState(0);
-  // const [qtyMsg, setQtyMsg] = useState("");
   const price =
     singleProduct.product.discountPercentage === 0
       ? singleProduct.product.price

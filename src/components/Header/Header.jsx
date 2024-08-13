@@ -222,9 +222,11 @@ export default function Header() {
                 <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
                   <Link sx={{ textDecoration: "none" }}>
                     <Box sx={{ position: "relative" }}>
-                      <LocalMallIcon
-                        sx={{ fontSize: "30px", color: "black" }}
-                      />
+                      <Link to="/myCart">
+                        <LocalMallIcon
+                          sx={{ fontSize: "30px", color: "black" }}
+                        />
+                      </Link>
                       <Box
                         sx={{
                           position: "absolute",

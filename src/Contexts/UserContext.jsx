@@ -154,6 +154,7 @@ export default function UserContext({ children }) {
           addToCart,
           removeFromCart,
           updateFromCart,
+          setUserCart,
         }}
       >
         {children}
@@ -171,6 +172,7 @@ export default function UserContext({ children }) {
           userInfo,
           addToCart,
           userCart,
+          setUserCart,
         }}
       >
         {children}

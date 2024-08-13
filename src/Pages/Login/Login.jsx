@@ -18,6 +18,8 @@ import axios from "axios";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../Contexts/UserContext";
+import loginImage from "../../images/login.jpg";
+
 function Copyright(props) {
   return (
     <Typography
@@ -195,7 +197,7 @@ export default function SignInSide() {
           sm={6}
           md={6}
           sx={{
-            backgroundImage: 'url("/images/login.jpg")',
+            backgroundImage: `url(${loginImage})`, 
             backgroundColor: (t) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]

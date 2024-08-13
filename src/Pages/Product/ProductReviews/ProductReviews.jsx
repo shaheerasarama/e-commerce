@@ -74,7 +74,7 @@ export default function ProductReviews({ product, relatedProducts }) {
               key={index}
             >
               <img
-                src="/images/avatar.png"
+                src={require(`../../../images/avatar.png`)}
                 alt=""
                 style={{ width: "80px", height: "80px", borderRadius: "50%" }}
               />

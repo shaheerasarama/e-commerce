@@ -51,7 +51,7 @@ export default function HeroImg() {
         <Box className="img">
           <Box
             component="img"
-            src="/images/pink-clothes-dream-meaning-33-removebg-preview.png"
+            src={require(`../../images/pink-clothes-dream-meaning-33-removebg-preview.png`)}
             alt="heroImg"
             sx={{
               width: "100%",

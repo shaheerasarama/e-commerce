@@ -8,9 +8,9 @@ import { Route, Routes } from "react-router-dom";
 import Product from "./Pages/Product/Product";
 import Products from "./Pages/Products/Products";
 import SignInSide from "./Pages/Login/Login";
-import { Home } from "@mui/icons-material";
 import UserContext from "./Contexts/UserContext";
 import Cart from "./Pages/Cart/Cart";
+import HomePage from "./Pages/Home/HomePage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -18,7 +18,7 @@ function App() {
         <UserContext>
           <Header />
           <Routes>
-            <Route element={<Home />} path="/"></Route>
+            <Route element={<HomePage />} path="/"></Route>
             <Route element={<Categories />} path="/:categoryName"></Route>
             {/* <Route element={<>not Found!</>} path="/*"></Route> */}
             <Route element={<Product />} path="/:categoryName/:id"></Route>

@@ -11,12 +11,23 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import theme from "../../Theme/Theme";
-import { Avatar, Input, Tooltip } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { Avatar, Tooltip } from "@mui/material";
 import useApi from "../../Hooks/useApi";
 import { useUserContext } from "../../Contexts/UserContext";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+    backgroundColor: theme.palette.primary.main,
+  },
+}));
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -51,23 +62,25 @@ export default function Header() {
     >
       <Container>
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              // fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: "0",
-              color: theme.palette.primary.blackColor,
-              textDecoration: "none",
-            }}
-          >
-            FASHION
-          </Typography>
+          <Link style={{ textDecoration: "none" }} to="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                // fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: "0",
+                color: theme.palette.primary.blackColor,
+                textDecoration: "none",
+              }}
+            >
+              FASHION
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -108,15 +121,6 @@ export default function Header() {
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
-              {/* <MenuItem>
-                <Input
-                  defaultValue="Search..."
-                  sx={{
-                    "&::after": { borderBottom: "none" },
-                    "&::before": { borderBottom: "none" },
-                  }}
-                />
-              </MenuItem> */}
             </Menu>
           </Box>
 
@@ -170,29 +174,6 @@ export default function Header() {
                 justifyContent: "space-between",
               }}
             >
-              {/* <Box
-                sx={{
-                  marginRight: "10px",
-                  backgroundColor: "#F1F1F1",
-                  padding: "3px",
-                  display: { xs: "none", lg: "flex" },
-                  alignItems: "center",
-                  borderRadius: "4px",
-                }}
-              >
-                <SearchIcon
-                  sx={{ color: "black", padding: "0 5px",fontSize:'30px' }}
-                ></SearchIcon>
-                <Input
-                  defaultValue="Search..."
-                  sx={{
-                    display: { xs: "none", md: "block" },
-                    "&::after": { borderBottom: "none" },
-                    "&::before": { borderBottom: "none" },
-                    "&:focus":{outline:'none !important'}
-                  }}
-                ></Input>
-              </Box> */}
               {!isLogin && (
                 <Button
                   sx={{
@@ -220,28 +201,17 @@ export default function Header() {
               )}
               {isLogin && userInfo && (
                 <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                  <Link sx={{ textDecoration: "none" }}>
-                    <Box sx={{ position: "relative" }}>
-                      <Link to="/myCart">
-                        <LocalMallIcon
-                          sx={{ fontSize: "30px", color: "black" }}
-                        />
-                      </Link>
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          top: "-5px",
-                          right: "0",
-                          backgroundColor: theme.palette.primary.main,
-                          borderRadius: "50%",
-                          padding: "2px",
-                          fontWeight: "500",
-                        }}
+                  <Link to="/myCart">
+                    <IconButton aria-label="cart">
+                      <StyledBadge
+                        badgeContent={userCart.length}
+                        color="default"
                       >
-                        {userCart.length}
-                      </Box>
-                    </Box>
+                        <ShoppingCartIcon sx={{ color: "black" }} />
+                      </StyledBadge>
+                    </IconButton>
                   </Link>
+
                   <Tooltip title="Open Profile">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar

@@ -21,8 +21,9 @@ export default function HomePage() {
     setLoading(false);
   }, [data, allProducts]);
   return (
-    <Container>
+      <>
       <HeroImg />
+    <Container>
       {loading ? (
         <>
           <>waiting </>
@@ -34,5 +35,6 @@ export default function HomePage() {
         </>
       )}
     </Container>
+      </>
   );
 }

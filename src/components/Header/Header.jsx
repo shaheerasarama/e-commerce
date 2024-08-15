@@ -158,6 +158,7 @@ export default function Header() {
                     color: theme.palette.primary.blackColor,
                     display: "block",
                     fontWeight: "500",
+                    textWrap: 'nowrap'
                   }}
                 >
                   {page.name}

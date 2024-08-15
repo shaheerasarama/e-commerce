@@ -19,7 +19,7 @@ export default function Products({ productsData }) {
         <Typography variant="h5" component="h5" sx={{ fontWeight: "500" }}>
           Products
         </Typography>
-        <Link style={{ textDecorationLine: "none", color: "black" }}>
+        <Link style={{ textDecorationLine: "none", color: "black" }} to="/products">
           <Typography
             sx={{
               textTransform: "capitalize",

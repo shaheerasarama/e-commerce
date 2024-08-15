@@ -12,10 +12,10 @@ export default function HomePage() {
   let [productsData, setProductsData] = useState([]);
   let [loading, setLoading] = useState(true);
   let { data } = useApi("https://dummyjson.com/products/category-list");
-  let { data: allProducts } = useApi("https://dummyjson.com/products?limit=4");
+  let { data: allProducts } = useApi("https://dummyjson.com/products?limit=8");
   useEffect(() => {
     if (data !== null && allProducts !== null) {
-      setCategories(data.slice(6, 16));
+      setCategories(data);
       setProductsData(allProducts.products);
     }
     setLoading(false);

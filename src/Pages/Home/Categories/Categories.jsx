@@ -44,10 +44,12 @@ export default function Categories({ categories }) {
           <Link
             style={{ textDecoration: "none", color: "black" }}
             to={`/${category}`}
+            key={index}
           >
             <Box
               sx={{
                 backgroundColor: theme.palette.primary.main,
+                textTransform:'capitalize',
                 padding: "25px 20px",
                 borderRadius: "10px",
                 textAlign: "center",

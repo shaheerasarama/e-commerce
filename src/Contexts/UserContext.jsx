@@ -32,7 +32,7 @@ export default function UserContext({ children }) {
 
   useEffect(() => {
     localStorage.setItem("userCart", JSON.stringify(userCart));
-    console.log("userCart has changed");
+    // console.log("userCart has changed");
   }, [userCart]);
 
   const getUserData = async () => {

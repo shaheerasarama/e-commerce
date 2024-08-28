@@ -24,9 +24,10 @@ function Copyright(props) {
   return (
     <>
     <Typography
-      variant="body2"
+      variant="body1"
       color="text.secondary"
       align="center"
+      component="div"
       {...props}
     >
     <Typography sx={{marginBottom:'10px'}}> <a href="https://dummyjson.com/users" style={{textDecoration:'none', color:'rgba(0, 0, 0, 0.6)'}}>Users Login List</a> </Typography>

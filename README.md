@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# E-commerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**E-commerce Website** is a React application that allows users to browse various online items, search for them, view details, and add or remove them from their cart. The cart operation is available only when the user is logged in. You can choose a user and log in using the [users list](https://dummyjson.com/users).
 
-## Available Scripts
+## Table of Contents
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Components](#components)
+- [Routing](#routing)
+- [Data Management](#data-management)
+- [Styling](#styling)
+- [Additional Resources](#additional-resources)
+- [Contact](#contact)
 
-In the project directory, you can run:
+## Demo
 
-### `npm start`
+Check out the online demo of the website: [E-commerce Website Demo](https://shaheerasarama.github.io/e-commerce/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To get started with the E-commerce Website, follow these steps:
 
-### `npm test`
+1. Clone the repository to your desktop:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    ```bash
+    git clone https://github.com/SD-0224/Shaheera-Sarama-React
+    ```
 
-### `npm run build`
+2. Navigate to the project directory:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```bash
+    cd firstProject
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ```bash
+    npm install
+    ```
 
-### `npm run eject`
+4. Start the development server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    ```bash
+    npm start
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Once the development server is running, you can access the E-commerce Website in your browser at `http://localhost:3000`. From there, you can browse online items, view item details, search for items, and fill your cart with your favorite items.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Components
 
-## Learn More
+The E-commerce Website consists of several components that are used throughout the application. Here are some of the main components:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Shared and reusable components throughout the application:**
+  - **Header component:** Contains the navigation.
+  - **Card component:** Displays information about the items.
+  - **ProductRating component:** Responsible for rendering the UI rating for items.
+  - **HeroImg component:** Contains the Hero image used on the website.
+  - **Footer component:** Contains the footer content.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Pages components which contain the pages in the website:**
+  - **Home component:** Contains the home page content, including a list of categories and some products.
+  - **Categories component:** Responsible for showing the products related to the selected category.
+  - **Product component:** Contains the details page content for individual items.
+  - **Login component:** Responsible for the login operation on the website.
+  - **Cart component:** Responsible for showing the user's cart of items with the ability to manipulate this data.
+  
+    > **Note:** The cart functionality uses `localStorage` to store and manage cart items because the API does not support add-to-cart requests.
 
-### Code Splitting
+  - **Products component:** Responsible for showing all the products with pagination, and includes the functionality for searching for items, applying filters by categories, and sorting products by:
+    - Price: Low to High
+    - Price: High to Low
+    - Most Rating
+    - Product Title
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Routing
 
-### Analyzing the Bundle Size
+The application uses React Router for client-side routing. Here are the main routes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `/`: Home page displaying a list of categories.
+- `/:categoryName`: Products listing according to the selected category.
+- `/:categoryName/:id`: Product details based on the selected product.
+- `/products`: Listing of all products.
+- `/login`: Displays the login page.
+- `/userCart`: Displays the user's cart items page.
 
-### Making a Progressive Web App
+## Data Management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The E-commerce Website manages item data using React State, the Context API, and makes API calls to retrieve item information from a [backend server](https://dummyjson.com).
 
-### Advanced Configuration
+## Styling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Styling is achieved using MUI components by customizing them to create a visually appealing user interface.
 
-### Deployment
+## Additional Resources
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**API Links:**
 
-### `npm run build` fails to minify
+- [List of all Products](https://dummyjson.com/products?limit=0)
+- [Details of a Product](https://dummyjson.com/products/1)
+- [List of products according to category](https://dummyjson.com/products/category/categorName)
+- [Login Request](https://dummyjson.com/auth/login)
+- [Getting User Info](https://dummyjson.com/auth/me)
+- [Getting Category List](https://dummyjson.com/products/category-list)
+- [Search for Products](https://dummyjson.com/products/search?limit=0&q=searchKeyWord)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+These links provide access to various endpoints of the backend server, allowing the retrieval of items and user information.
+
+## Contact
+
+For any inquiries or feedback, feel free to reach out via email at shaheerasarama@gmail.com.

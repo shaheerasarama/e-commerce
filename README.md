@@ -9,6 +9,7 @@
 - [Components](#components)
 - [Routing](#routing)
 - [Data Management](#data-management)
+- [Cart Context](#cart-context)
 - [Styling](#styling)
 - [Additional Resources](#additional-resources)
 - [Contact](#contact)
@@ -89,6 +90,23 @@ The application uses React Router for client-side routing. Here are the main rou
 ## Data Management
 
 The E-commerce Website manages item data using React State, the Context API, and makes API calls to retrieve item information from a [backend server](https://dummyjson.com).
+
+## Cart Context
+
+The Cart Context is responsible for managing the user's login status and handling the login and logout processes. It also retrieves user information and manages the user's cart, allowing for updates and deletions of cart items. This context is utilized throughout the application to ensure a consistent user experience.
+
+### Features:
+- **User Login Status:** Tracks whether the user is logged in or not.
+- **User Information:** Retrieves and stores user details after login.
+- **Cart Management:** 
+  - **Add Items:** Allows users to add items to their cart.
+  - **Update Items:** Enables updating the quantity of items in the cart.
+  - **Delete Items:** Allows for the removal of items from the cart.
+- **Logout Functionality:** Handles user logout, resetting the user login status and clearing any user-related data.
+
+### Usage:
+The Cart Context can be accessed in any component that needs to manage cart-related functionalities, providing a centralized way to handle user cart data throughout the application.
+
 
 ## Styling
 

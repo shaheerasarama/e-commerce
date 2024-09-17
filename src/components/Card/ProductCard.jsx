@@ -1,9 +1,7 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import theme from "../../Theme/Theme";
 import { Box } from "@mui/material";
@@ -23,10 +21,8 @@ export default function ProductCard({ product }) {
     >
       <Card
         sx={{
-          // maxWidth: 350,
           boxShadow: "none",
           border: `1px solid ${theme.palette.primary.blackColor}`,
-          // margin:' 0 auto',
           position: "relative",
           height: "100%",
         }}
@@ -106,10 +102,6 @@ export default function ProductCard({ product }) {
             {/* <FavoriteIcon sx={{color:'#E72929'}}/> */}
           </Box>
         </CardContent>
-        {/* <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
       </Card>
     </Link>
   );

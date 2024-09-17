@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function Products() {
   let [allProducts, setAllProducts] = useState(null);
@@ -24,6 +25,7 @@ export default function Products() {
   let { data: categories } = useApi(
     `https://dummyjson.com/products/category-list`
   );
+
   const applySearch = async () => {
     let results = await axios.get(
       `https://dummyjson.com/products/search?limit=0&q=${search}`
@@ -50,15 +52,15 @@ export default function Products() {
           );
           break;
       }
-
-      if (selectedFilter !== "") {
-        FilterResults = FilterResults.filter(
-          (filterResult) => filterResult.category === selectedFilter
-        );
-      }
+    }
+    if (selectedFilter !== "") {
+      FilterResults = FilterResults.filter(
+        (filterResult) => filterResult.category === selectedFilter
+      );
     }
     return FilterResults;
   };
+
   useEffect(() => {
     let debounceSearch = setTimeout(() => {
       applySearch();
@@ -89,7 +91,17 @@ export default function Products() {
     <Box>
       <HeroImg />
       {allProducts === null || categories === null ? (
-        <>waiting</>
+        <Container>
+          <Grid container spacing={2}>
+            {Array.from(new Array(productsPerPage)).map((_, index) => (
+              <Grid item xs={12} sm={6} md={3} key={index}>
+                <Skeleton variant="rectangular" width={210} height={118} />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" width="60%" />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       ) : (
         <Container>
           <Grid container spacing={2}>

@@ -17,7 +17,6 @@ import { useUserContext } from "../../Contexts/UserContext";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -158,7 +157,7 @@ export default function Header() {
                     color: theme.palette.primary.blackColor,
                     display: "block",
                     fontWeight: "500",
-                    textWrap: 'nowrap'
+                    textWrap: "nowrap",
                   }}
                 >
                   {page.name}
@@ -242,24 +241,79 @@ export default function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Link
-                    sx={{ textDecoration: "none" }}
-                    onClick={() => userLogOut()}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: theme.palette.primary.blackColor,
+                    }}
+                    textAlign="center"
                   >
-                    <Typography
-                      sx={{
-                        textDecoration: "none",
-                        color: theme.palette.primary.blackColor,
-                      }}
-                      textAlign="center"
-                    >
-                      {setting}
-                    </Typography>
-                  </Link>
-                </MenuItem>
-              ))}
+                    profile
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: theme.palette.primary.blackColor,
+                    }}
+                    textAlign="center"
+                  >
+                    account
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: theme.palette.primary.blackColor,
+                    }}
+                    textAlign="center"
+                  >
+                    dashboard
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    textTransform: "capitalize",
+                  }}
+                  onClick={() => userLogOut()}
+                >
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: theme.palette.primary.blackColor,
+                    }}
+                    textAlign="center"
+                  >
+                    log out
+                  </Typography>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -267,4 +321,3 @@ export default function Header() {
     </AppBar>
   );
 }
- 

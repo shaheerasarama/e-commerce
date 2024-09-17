@@ -13,7 +13,6 @@ export default function UserContext({ children }) {
       ? JSON.parse(localStorage.getItem("userCart"))
       : []
   );
-  // console.log(userCart.length)
 
   let navigate = useNavigate();
 
@@ -32,7 +31,6 @@ export default function UserContext({ children }) {
 
   useEffect(() => {
     localStorage.setItem("userCart", JSON.stringify(userCart));
-    // console.log("userCart has changed");
   }, [userCart]);
 
   const getUserData = async () => {
@@ -76,16 +74,6 @@ export default function UserContext({ children }) {
   const userLogin = () => {
     setIsLogin(true);
   };
-
-  // const userCart = async () => {
-  //   if (isLogin) {
-  //     let id = localStorage.getItem("userId");
-  //     let response = await axios.get(`https://dummyjson.com/carts/user/${id}`);
-  //     console.log(response.data.carts);
-  //   } else {
-  //     return null;
-  //   }
-  // };
 
   const addToCart = (product, qty, productMinimumOrderQuantity) => {
     let duplicatedProduct = userCart.find(

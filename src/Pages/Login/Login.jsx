@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -23,25 +23,31 @@ import loginImage from "../../images/login.jpg";
 function Copyright(props) {
   return (
     <>
-    <Typography
-      variant="body1"
-      color="text.secondary"
-      align="center"
-      component="div"
-      {...props}
-    >
-    <Typography sx={{marginBottom:'10px'}}> <a href="https://dummyjson.com/users" style={{textDecoration:'none', color:'rgba(0, 0, 0, 0.6)'}}>Users Login List</a> </Typography>
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </Typography>
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        align="center"
+        component="div"
+        {...props}
+      >
+        <Typography sx={{ marginBottom: "10px" }}>
+          {" "}
+          <a
+            href="https://dummyjson.com/users"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.6)" }}
+          >
+            Users Login List
+          </a>{" "}
+        </Typography>
+        {"Copyright © "}
+        <Link color="inherit" href="https://mui.com/">
+          Your Website
+        </Link>{" "}
+        {new Date().getFullYear()}
+      </Typography>
     </>
   );
 }
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -50,9 +56,6 @@ export default function SignInSide() {
   let navigate = useNavigate();
   const [user, setUser] = useState({ userName: "", password: "" });
   const [error, setError] = useState(false);
-  useEffect(() => {
-    isLogin && navigate("/products");
-  }, [isLogin]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -68,17 +71,20 @@ export default function SignInSide() {
         {
           username: userData.userName,
           password: userData.password,
-          expiresInMins:1
+          expiresInMins: 1,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
       localStorage.setItem("userToken", JSON.stringify(response.data.token));
-      localStorage.setItem("userRefreshToken", JSON.stringify(response.data.refreshToken));
-      localStorage.setItem("userId",response.data.id);
+      localStorage.setItem(
+        "userRefreshToken",
+        JSON.stringify(response.data.refreshToken)
+      );
+      localStorage.setItem("userId", response.data.id);
       setIsLogin(true);
-      navigate("/products");
+      navigate("/");
     } catch (error) {
       setError(true);
       setTimeout(() => {
@@ -87,8 +93,15 @@ export default function SignInSide() {
     }
   };
 
-  return (
+  return !isLogin ? (
     <ThemeProvider theme={defaultTheme}>
+      {error ? (
+        <Alert severity="error" sx={{ fontWeight: "bold", color: "black" }}>
+          Your username or password is incorrect. Please try again.
+        </Alert>
+      ) : (
+        ""
+      )}
       <Grid container component="main" sx={{ margin: "0px 0" }}>
         <CssBaseline />
         <Grid
@@ -116,21 +129,16 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="userName"
                 label="User Name"
                 name="userName"
                 autoComplete="userName"
                 autoFocus
+                required
               />
               <TextField
                 margin="normal"
@@ -187,11 +195,6 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
-              {error ? (
-                <Alert severity="error">This is an error Alert.</Alert>
-              ) : (
-                ""
-              )}
             </Box>
           </Box>
         </Grid>
@@ -201,7 +204,7 @@ export default function SignInSide() {
           sm={6}
           md={6}
           sx={{
-            backgroundImage: `url(${loginImage})`, 
+            backgroundImage: `url(${loginImage})`,
             backgroundColor: (t) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]
@@ -211,5 +214,5 @@ export default function SignInSide() {
         />
       </Grid>
     </ThemeProvider>
-  );
+  ) : null;
 }

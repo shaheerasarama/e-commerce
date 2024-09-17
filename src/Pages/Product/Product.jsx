@@ -29,9 +29,6 @@ export default function Product() {
     <Container>
       {product === null ? (
         <Stack spacing={1} sx={{ margin: "30px 0" }}>
-          {/* For variant="text", adjust the height via font-size */}
-          {/* <Skeleton variant="text" sx={{ fontSize: "1rem" }} /> */}
-          {/* For other variants, adjust the size with `width` and `height` */}
           <Skeleton variant="rectangular" width={"100%"} height={450} />
         </Stack>
       ) : (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import "./ProductReviews.module.css";
+import styles from "./ProductReviews.module.css";
 import theme from "./../../../Theme/Theme";
 import { Box, Typography } from "@mui/material";
 import ProductRating from "../../../components/ProductRating/ProductRating";

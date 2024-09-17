@@ -11,6 +11,8 @@ import SignInSide from "./Pages/Login/Login";
 import UserContext from "./Contexts/UserContext";
 import Cart from "./Pages/Cart/Cart";
 import HomePage from "./Pages/Home/HomePage";
+import ProtectedRoutes from "./utils/ProtectedRoutes/ProtectedRoutes";
+import LoginRoutes from "./utils/LoginRoutes/LoginRoutes";
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -23,8 +25,12 @@ function App() {
             {/* <Route element={<>not Found!</>} path="/*"></Route> */}
             <Route element={<Product />} path="/:categoryName/:id"></Route>
             <Route element={<Products />} path="/products"></Route>
-            <Route element={<SignInSide />} path="/login"></Route>
-            <Route element={<Cart />} path="/myCart"></Route> 
+            <Route element={<LoginRoutes />}>
+              <Route element={<SignInSide />} path="/login"></Route>
+            </Route>
+            <Route element={<ProtectedRoutes />}>
+              <Route element={<Cart />} path="/myCart"></Route>
+            </Route>
           </Routes>
           <Footer />
         </UserContext>

@@ -15,7 +15,7 @@ export default function Footer() {
     a: {
       color: theme.palette.primary.main,
       display: "flex",
-      ustifyContent: "center",
+      justifyContent: "center",
       alignItems: "center",
     },
   };
@@ -55,7 +55,7 @@ export default function Footer() {
                 color: theme.palette.primary.textColor,
                 lineHeight: "1.4",
                 fontSize: "0.9rem",
-                marginBottom:'20px'
+                marginBottom: "20px",
               }}
             >
               Complete your style with awesome clothes from us.

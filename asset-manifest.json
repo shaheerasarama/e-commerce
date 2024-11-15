@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/e-commerce/static/css/main.6aa9bda6.css",
-    "main.js": "/e-commerce/static/js/main.1334ed48.js",
+    "main.js": "/e-commerce/static/js/main.52c6484f.js",
     "static/js/453.4297e0f3.chunk.js": "/e-commerce/static/js/453.4297e0f3.chunk.js",
     "static/media/pink-clothes-dream-meaning-33-removebg-preview.png": "/e-commerce/static/media/pink-clothes-dream-meaning-33-removebg-preview.fdfae3e018081c47b82a.png",
     "static/media/login.jpg": "/e-commerce/static/media/login.dd0e91020a0c2d8aa3a6.jpg",
     "static/media/avatar.png": "/e-commerce/static/media/avatar.188ab1fb4548ceada7f7.png",
     "index.html": "/e-commerce/index.html",
     "main.6aa9bda6.css.map": "/e-commerce/static/css/main.6aa9bda6.css.map",
-    "main.1334ed48.js.map": "/e-commerce/static/js/main.1334ed48.js.map",
+    "main.52c6484f.js.map": "/e-commerce/static/js/main.52c6484f.js.map",
     "453.4297e0f3.chunk.js.map": "/e-commerce/static/js/453.4297e0f3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6aa9bda6.css",
-    "static/js/main.1334ed48.js"
+    "static/js/main.52c6484f.js"
   ]
 }

@@ -59,7 +59,7 @@ export default function UserContext({ children }) {
           );
           localStorage.setItem(
             "userToken",
-            JSON.stringify(response.data.token)
+            JSON.stringify(response.data.accessToken) 
           );
           localStorage.setItem(
             "userRefreshToken",

@@ -70,14 +70,13 @@ export default function SignInSide() {
         `https://dummyjson.com/auth/login`,
         {
           username: userData.userName,
-          password: userData.password,
-          expiresInMins: 1,
+          password: userData.password
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      localStorage.setItem("userToken", JSON.stringify(response.data.token));
+      localStorage.setItem("userToken", JSON.stringify(response.data.accessToken));
       localStorage.setItem(
         "userRefreshToken",
         JSON.stringify(response.data.refreshToken)

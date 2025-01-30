@@ -8,32 +8,41 @@ import { Route, Routes } from "react-router-dom";
 import Product from "./Pages/Product/Product";
 import Products from "./Pages/Products/Products";
 import SignInSide from "./Pages/Login/Login";
-import UserContext from "./Contexts/UserContext";
 import Cart from "./Pages/Cart/Cart";
 import HomePage from "./Pages/Home/HomePage";
 import ProtectedRoutes from "./utils/ProtectedRoutes/ProtectedRoutes";
 import LoginRoutes from "./utils/LoginRoutes/LoginRoutes";
+import User from "./Pages/User/User";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUserData } from "./Redux/actions/userActions";
 function App() {
+  let dispatch = useDispatch();
+  let { isLoggedIn } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    isLoggedIn && getUserData(dispatch);
+  }, [isLoggedIn, dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <UserContext>
-          <Header />
-          <Routes>
-            <Route element={<HomePage />} path="/"></Route>
-            <Route element={<Categories />} path="/:categoryName"></Route>
-            {/* <Route element={<>not Found!</>} path="/*"></Route> */}
-            <Route element={<Product />} path="/:categoryName/:id"></Route>
-            <Route element={<Products />} path="/products"></Route>
-            <Route element={<LoginRoutes />}>
-              <Route element={<SignInSide />} path="/login"></Route>
-            </Route>
-            <Route element={<ProtectedRoutes />}>
-              <Route element={<Cart />} path="/myCart"></Route>
-            </Route>
-          </Routes>
-          <Footer />
-        </UserContext>
+        <Header />
+        <Routes>
+          <Route element={<HomePage />} path="/"></Route>
+          <Route element={<Categories />} path="/:categoryName"></Route>
+          {/* <Route element={<>not Found!</>} path="/*"></Route> */}
+          <Route element={<Product />} path="/:categoryName/:id"></Route>
+          <Route element={<Products />} path="/products"></Route>
+          <Route element={<LoginRoutes />}>
+            <Route element={<SignInSide />} path="/login"></Route>
+          </Route>
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Cart />} path="/myCart"></Route>
+            <Route element={<User />} path="/user"></Route>
+          </Route>
+        </Routes>
+        <Footer />
       </div>
     </ThemeProvider>
   );

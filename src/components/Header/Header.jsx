@@ -9,15 +9,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import theme from "../../Theme/Theme";
 import { Avatar, Tooltip } from "@mui/material";
 import useApi from "../../Hooks/useApi";
-import { useUserContext } from "../../Contexts/UserContext";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { loggedOut } from "../../Redux/types/userTypes";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -30,7 +31,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let { isLogin, userLogOut, userInfo, userCart } = useUserContext();
+  let dispatch = useDispatch();
+  // let { isLogin, userLogOut, userInfo, userCart } = useUserContext();
+  let { isLoggedIn, data: userData } = useSelector((state) => state.user);
+  let { cartItems } = useSelector((state) => state.cart);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -49,11 +53,19 @@ export default function Header() {
 
   const [categories, setCategories] = useState([]);
   let { data } = useApi(`https://dummyjson.com/products/categories`);
+  let navigate = useNavigate();
+
+  let handleLogOut = () => {
+    navigate("/login");
+    dispatch(loggedOut());
+  };
+
   useEffect(() => {
     if (data) {
       setCategories(data.slice(0, 6));
     }
   }, [data]);
+
   return (
     <AppBar
       position="static"
@@ -174,7 +186,7 @@ export default function Header() {
                 justifyContent: "space-between",
               }}
             >
-              {!isLogin && (
+              {!isLoggedIn && (
                 <Button
                   sx={{
                     backgroundColor: theme.palette.primary.blackColor,
@@ -199,12 +211,12 @@ export default function Header() {
                   </Link>
                 </Button>
               )}
-              {isLogin && userInfo && (
+              {isLoggedIn && userData && (
                 <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
                   <Link to="/myCart">
                     <IconButton aria-label="cart">
                       <StyledBadge
-                        badgeContent={userCart.length}
+                        badgeContent={cartItems.length}
                         color="default"
                       >
                         <ShoppingCartIcon sx={{ color: "black" }} />
@@ -215,10 +227,10 @@ export default function Header() {
                   <Tooltip title="Open Profile">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
-                        alt={userInfo.firstName}
-                        src={userInfo.image || undefined}
+                        alt={userData.firstName}
+                        src={userData.image || undefined}
                       >
-                        {!userInfo.image && userInfo.firstName.charAt(0)}
+                        {/* {!userData.image && userData.firstName.charAt(0)} */}
                       </Avatar>
                     </IconButton>
                   </Tooltip>
@@ -301,7 +313,7 @@ export default function Header() {
                     textDecoration: "none",
                     textTransform: "capitalize",
                   }}
-                  onClick={() => userLogOut()}
+                  onClick={() => handleLogOut()}
                 >
                   <Typography
                     sx={{

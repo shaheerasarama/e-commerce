@@ -14,11 +14,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "../../Theme/Theme";
-import axios from "axios";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../Contexts/UserContext";
 import loginImage from "../../images/login.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../Redux/actions/userActions";
+import { useEffect } from "react";
+import { setError } from "../../Redux/types/userTypes";
 
 function Copyright(props) {
   return (
@@ -52,10 +54,17 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  let { isLogin, setIsLogin } = useUserContext();
   let navigate = useNavigate();
   const [user, setUser] = useState({ userName: "", password: "" });
-  const [error, setError] = useState(false);
+  let { error, loading, isLoggedIn } = useSelector((state) => state.user);
+  let dispatch = useDispatch();
+
+  if (error) {
+    setTimeout(() => {
+      dispatch(setError());
+    }, 5000);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,35 +73,16 @@ export default function SignInSide() {
       password: data.get("password"),
     };
     setUser(userData);
-
-    try {
-      let response = await axios.post(
-        `https://dummyjson.com/auth/login`,
-        {
-          username: userData.userName,
-          password: userData.password
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      localStorage.setItem("userToken", JSON.stringify(response.data.accessToken));
-      localStorage.setItem(
-        "userRefreshToken",
-        JSON.stringify(response.data.refreshToken)
-      );
-      localStorage.setItem("userId", response.data.id);
-      setIsLogin(true);
-      navigate("/");
-    } catch (error) {
-      setError(true);
-      setTimeout(() => {
-        setError(false);
-      }, 5000);
-    }
+    dispatch(userLogin(userData));
   };
 
-  return !isLogin ? (
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/user");
+    }
+  }, [isLoggedIn, navigate]);
+
+  return !isLoggedIn ? (
     <ThemeProvider theme={defaultTheme}>
       {error ? (
         <Alert severity="error" sx={{ fontWeight: "bold", color: "black" }}>
@@ -163,6 +153,7 @@ export default function SignInSide() {
                   bgcolor: theme.palette.primary.main,
                   "&:hover": { backgroundColor: "black" },
                 }}
+                disabled={loading}
               >
                 Sign In
               </Button>

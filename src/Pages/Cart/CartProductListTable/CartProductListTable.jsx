@@ -15,9 +15,11 @@ import {
 } from "@mui/material";
 import theme from "../../../Theme/Theme";
 import ProductTableRow from "./ProductTableRow";
+import { useSelector } from "react-redux";
 
 export default function CartProductListTable() {
-  let { userCart } = useUserContext();
+  // let { userCart } = useUserContext();
+  let { cartItems } = useSelector((state) => state.cart);
   let [qtyMsg, setQtyMsg] = useState("");
   return (
     <Container>
@@ -69,7 +71,7 @@ export default function CartProductListTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userCart.map((singleProduct, index) => (
+            {cartItems.map((singleProduct, index) => (
               <ProductTableRow
                 key={index}
                 singleProduct={singleProduct}

@@ -4,10 +4,13 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import theme from "../../../Theme/Theme";
 import { useUserContext } from "../../../Contexts/UserContext";
+import { removeFromCart, updateCart } from "../../../Redux/actions/cartActions";
+import { useDispatch } from "react-redux";
 export default function ProductTableRow({ singleProduct, setQtyMsg }) {
-  let { updateFromCart, removeFromCart } = useUserContext();
+  // let { updateFromCart, removeFromCart } = useUserContext();
   let [productQty, setProductQty] = useState(singleProduct.qty);
   let [productQtyChange, setProductQtyChange] = useState(0);
+  let dispatch = useDispatch();
   const price =
     singleProduct.product.discountPercentage === 0
       ? singleProduct.product.price
@@ -76,14 +79,16 @@ export default function ProductTableRow({ singleProduct, setQtyMsg }) {
           <Button
             variant="text"
             sx={{ color: "#03346E" }}
-            onClick={() => updateFromCart(singleProduct.product, productQty)}
+            onClick={() =>
+              dispatch(updateCart(singleProduct.product, productQty))
+            }
           >
             Update
           </Button>
           <Button
             variant="text"
             sx={{ color: "#A70000" }}
-            onClick={() => removeFromCart(singleProduct.product)}
+            onClick={() => dispatch(removeFromCart(singleProduct.product))}
           >
             Delete
           </Button>

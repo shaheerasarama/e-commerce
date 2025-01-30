@@ -1,34 +1,55 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useUserContext } from "../../../Contexts/UserContext";
 import theme from "../../../Theme/Theme";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearAll, ConfirmOrder } from "../../../Redux/actions/cartActions";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 export default function OrderInfo() {
-  let { userInfo, userCart, setUserCart } = useUserContext();
+  let { data, loading } = useSelector((state) => state.user);
+  let { cartItems } = useSelector((state) => state.cart);
+  let dispatch = useDispatch();
   let [confirmationMsg, setConfirmationMsg] = useState(false);
   let grandTotal = 0;
-  userCart.map((singleProduct) => {
-    const price =
-      singleProduct.product.discountPercentage === 0
-        ? singleProduct.product.price
-        : singleProduct.product.price -
-          (singleProduct.product.price *
-            singleProduct.product.discountPercentage) /
-            100;
-    const subtotal = price * singleProduct.qty;
-    grandTotal += subtotal;
-  });
+  if (cartItems.length !== 0) {
+    cartItems.map((singleProduct) => {
+      const price =
+        singleProduct.product.discountPercentage === 0
+          ? singleProduct.product.price
+          : singleProduct.product.price -
+            (singleProduct.product.price *
+              singleProduct.product.discountPercentage) /
+              100;
+      const subtotal = price * singleProduct.qty;
+      grandTotal += subtotal;
+    });
+  }
 
   let confirmationOrder = () => {
-    setUserCart([]);
+    dispatch(ConfirmOrder());
     setConfirmationMsg(true);
     setTimeout(() => {
       setConfirmationMsg(false);
     }, 8000);
   };
-  if (userInfo !== null) {
+
+  let clearCartItems = () => {
+    dispatch(clearAll());
+  };
+
+  if (loading) {
     return (
+      <Container>
+        <Stack spacing={1} sx={{ margin: "10px 0" }}>
+          <Skeleton variant="rectangular" width={"100%"} height={200} />
+        </Stack>
+      </Container>
+    );
+  }
+  return (
+    <>
       <Container sx={{ marginTop: "15px", marginBottom: "15px" }}>
         <Typography
           variant="h5"
@@ -92,9 +113,25 @@ export default function OrderInfo() {
                   Grand Total
                 </Typography>
                 <Typography variant="p" component="p">
-                  ${Number(grandTotal.toFixed(2)) + 20}
+                  $
+                  {cartItems.length === 0 ? (
+                    <>0</>
+                  ) : (
+                    <>{Number(grandTotal.toFixed(2)) + 20}</>
+                  )}
                 </Typography>
               </Box>
+              <Button
+                disabled={cartItems.length === 0}
+                variant="contained"
+                sx={{
+                  backgroundColor: theme.palette.primary.main,
+                  color: "black",
+                }}
+                onClick={confirmationOrder}
+              >
+                Confirm Order
+              </Button>
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography
@@ -110,7 +147,7 @@ export default function OrderInfo() {
                   component="p"
                   sx={{ marginBottom: "5px" }}
                 >
-                  {userInfo.address.country}
+                  {data?.address?.country}
                 </Typography>
               </Box>
               <Box>
@@ -119,7 +156,7 @@ export default function OrderInfo() {
                   component="p"
                   sx={{ marginBottom: "5px" }}
                 >
-                  {userInfo.address.city}
+                  {data?.address?.city}
                 </Typography>
                 <Box>
                   <Typography
@@ -127,22 +164,11 @@ export default function OrderInfo() {
                     component="p"
                     sx={{ marginBottom: "5px" }}
                   >
-                    {userInfo.address.address}
+                    {data?.address?.address}
                   </Typography>
                 </Box>
               </Box>
               <Box sx={{ display: "flex", gap: "20px", marginTop: "10px" }}>
-                <Button
-                  disabled={userCart.length === 0}
-                  variant="contained"
-                  sx={{
-                    backgroundColor: theme.palette.primary.main,
-                    color: "black",
-                  }}
-                  onClick={confirmationOrder}
-                >
-                  Confirm Order
-                </Button>
                 <Button
                   variant="contained"
                   sx={{
@@ -155,6 +181,19 @@ export default function OrderInfo() {
                     style={{ color: "black", textDecoration: "none" }}
                   >
                     Reorder
+                  </Link>
+                </Button>
+                <Button
+                  variant="contained"
+                  disabled={cartItems.length === 0}
+                  sx={{
+                    backgroundColor: theme.palette.primary.errorColor,
+                    color: "black",
+                  }}
+                  onClick={clearCartItems}
+                >
+                  <Link style={{ color: "white", textDecoration: "none" }}>
+                    Clear All
                   </Link>
                 </Button>
               </Box>
@@ -170,7 +209,7 @@ export default function OrderInfo() {
               backgroundColor: "black",
               padding: "8px",
               borderRadius: "10px",
-              width: "fit-content",
+              width: "100%",
             }}
           >
             Thank you for your order! <br></br> Your order has been confirmed.
@@ -178,6 +217,6 @@ export default function OrderInfo() {
           </Typography>
         )}
       </Container>
-    );
-  }
+    </>
+  );
 }

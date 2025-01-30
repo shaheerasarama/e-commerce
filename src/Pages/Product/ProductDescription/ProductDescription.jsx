@@ -15,8 +15,9 @@ import AddIcon from "@mui/icons-material/Add";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useUserContext } from "../../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, setError } from "../../../Redux/actions/cartActions";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export default function ProductDescription({ product }) {
@@ -24,8 +25,16 @@ export default function ProductDescription({ product }) {
   const [qtyMsg, setQtyMsg] = useState("");
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  let { isLogin, addToCart } = useUserContext();
+  // let { isLogin, addToCart } = useUserContext();
+  let { isLoggedIn } = useSelector((state) => state.user);
+  let { qtyError } = useSelector((state) => state.cart);
+  let dispatch = useDispatch();
   let navigate = useNavigate();
+  if (qtyError) {
+    setTimeout(() => {
+      dispatch(setError());
+    }, 5000);
+  }
   const maxSteps = product.images.length;
 
   const discount =
@@ -60,6 +69,19 @@ export default function ProductDescription({ product }) {
 
   return (
     <Box sx={{ margin: "30px 0px" }}>
+      {qtyError && (
+        <Typography
+          variant="subtitle"
+          component="div"
+          sx={{
+            color: theme.palette.primary.errorColor,
+            fontWeight: "500",
+            margin: "12px 0",
+          }}
+        >
+          You cannot add more of this product.
+        </Typography>
+      )}
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
@@ -284,13 +306,15 @@ export default function ProductDescription({ product }) {
                   textWrap: "nowrap",
                 }}
                 onClick={() => {
-                  if (!isLogin) {
+                  if (!isLoggedIn) {
                     navigate("/login");
                   } else {
-                    addToCart(
-                      product,
-                      minimumOrderQuantity,
-                      product.minimumOrderQuantity
+                    dispatch(
+                      addToCart(
+                        product,
+                        minimumOrderQuantity,
+                        product.minimumOrderQuantity
+                      )
                     );
                   }
                 }}

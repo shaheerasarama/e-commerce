@@ -1,8 +1,0 @@
-/*
-
-// refresh token problem => userActions.js:39 GET https://dummyjson.com/auth/me 401 (Unauthorized)
-// redirect the user to login page when user logout
-// user page 
-// initial loading 
-
-*/

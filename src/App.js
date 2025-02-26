@@ -14,11 +14,19 @@ import ProtectedRoutes from "./utils/ProtectedRoutes/ProtectedRoutes";
 import LoginRoutes from "./utils/LoginRoutes/LoginRoutes";
 import User from "./Pages/User/User";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserData } from "./Redux/actions/userActions";
+
 function App() {
   let dispatch = useDispatch();
   let { isLoggedIn } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  }, []);
 
   useEffect(() => {
     isLoggedIn && getUserData(dispatch);
@@ -26,23 +34,31 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route element={<HomePage />} path="/"></Route>
-          <Route element={<Categories />} path="/:categoryName"></Route>
-          {/* <Route element={<ErrorPage/>} path="/error"></Route> */}
-          <Route element={<Product />} path="/:categoryName/:id"></Route>
-          <Route element={<Products />} path="/products"></Route>
-          <Route element={<LoginRoutes />}>
-            <Route element={<SignInSide />} path="/login"></Route>
-          </Route>
-          <Route element={<ProtectedRoutes />}>
-            <Route element={<Cart />} path="/myCart"></Route>
-            <Route element={<User />} path="/user"></Route>
-          </Route>
-        </Routes>
-        <Footer />
+      {loading && (
+        <div className="loader">
+          <div className="spinner"></div>
+        </div>
+      )}
+
+      {/* Main content is hidden during loading */}
+      <div style={{ display: loading ? "none" : "block" }}>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route element={<HomePage />} path="/" />
+            <Route element={<Categories />} path="/:categoryName" />
+            <Route element={<Product />} path="/:categoryName/:id" />
+            <Route element={<Products />} path="/products" />
+            <Route element={<LoginRoutes />}>
+              <Route element={<SignInSide />} path="/login" />
+            </Route>
+            <Route element={<ProtectedRoutes />}>
+              <Route element={<Cart />} path="/myCart" />
+              <Route element={<User />} path="/user" />
+            </Route>
+          </Routes>
+          <Footer />
+        </div>
       </div>
     </ThemeProvider>
   );

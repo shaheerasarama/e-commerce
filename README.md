@@ -1,131 +1,182 @@
-# E-commerce Website
+# 🛍️ E-commerce Website
 
-**E-commerce Website** is a React application that allows users to browse various online items, search for them, view details, and add or remove them from their cart. The cart operation is available only when the user is logged in. You can choose a user and log in using the [users list](https://dummyjson.com/users).
+A React-based e-commerce web app where users can browse, search, view, and add/remove products from their cart. Users must be logged in to manage their cart. You can log in using a dummy user from this [users list](https://dummyjson.com/users).
 
-## Table of Contents
-- [Demo](#demo)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Components](#components)
-- [Routing](#routing)
-- [Data Management](#data-management)
-- [Cart Context](#cart-context)
-- [Styling](#styling)
-- [Additional Resources](#additional-resources)
-- [Contact](#contact)
+---
 
-## Demo
+## 📑 Table of Contents
 
-Check out the online demo of the website: [E-commerce Website Demo](https://shaheerasarama.github.io/e-commerce/).
+- [🚀 Demo](#-demo)
+- [⚙️ Getting Started](#️-getting-started)
+- [💻 Usage](#-usage)
+- [🧩 Components](#-components)
+  - [🔁 Shared Components](#-shared-components)
+  - [📄 Page Components](#-page-components)
+- [🌐 Routing](#-routing)
+- [🔧 Data Management](#-data-management)
+  - [🧠 User Slice](#-user-slice)
+  - [🛒 Cart Slice](#-cart-slice)
+- [🎯 Cart Context](#-cart-context)
+  - [📌 Features](#-features)
+  - [📦 Usage](#-usage-1)
+- [🎨 Styling](#-styling)
+- [📚 API Resources](#-api-resources)
+- [📬 Contact](#-contact)
 
-## Getting Started
+---
 
-To get started with the E-commerce Website, follow these steps:
+## 🚀 Demo
 
-1. Clone the repository to your desktop:
+Check out the live version of the project here:  
+👉 [https://shaheerasarama.github.io/e-commerce/](https://shaheerasarama.github.io/e-commerce/)
 
-    ```bash
-    git clone https://github.com/SD-0224/Shaheera-Sarama-React
-    ```
+---
 
-2. Navigate to the project directory:
+## ⚙️ Getting Started
 
-    ```bash
-    cd firstProject
-    ```
+Follow these steps to run the project locally:
 
-3. Install dependencies:
+```bash
+# 1. Clone the repository
+git clone https://github.com/shaheerasarama/e-commerce
 
-    ```bash
-    npm install
-    ```
+# 2. Navigate to the project directory
+cd e-commerce
 
-4. Start the development server:
+# 3. Install dependencies
+npm install
 
-    ```bash
-    npm start
-    ```
+# 4. Start the development server
+npm start
+```
 
-## Usage
+---
 
-Once the development server is running, you can access the E-commerce Website in your browser at `http://localhost:3000`. From there, you can browse online items, view item details, search for items, and fill your cart with your favorite items.
+## 💻 Usage
 
-## Components
+Visit `http://localhost:3000` in your browser. From there, you can:
 
-The E-commerce Website consists of several components that are used throughout the application. Here are some of the main components:
+- View all products
+- Filter products by category
+- Sort and search
+- View product details
+- Log in with dummy user credentials
+- Add/remove items from your cart
 
-- **Shared and reusable components throughout the application:**
-  - **Header component:** Contains the navigation.
-  - **Card component:** Displays information about the items.
-  - **ProductRating component:** Responsible for rendering the UI rating for items.
-  - **HeroImg component:** Contains the Hero image used on the website.
-  - **Footer component:** Contains the footer content.
+> Note: Cart functionality is enabled only for logged-in users.
 
-- **Pages components which contain the pages in the website:**
-  - **Home component:** Contains the home page content, including a list of categories and some products.
-  - **Categories component:** Responsible for showing the products related to the selected category.
-  - **Product component:** Contains the details page content for individual items.
-  - **Login component:** Responsible for the login operation on the website.
-  - **Cart component:** Responsible for showing the user's cart of items with the ability to manipulate this data.
-  
-    > **Note:** The cart functionality uses `localStorage` to store and manage cart items because the API does not support add-to-cart requests.
+---
 
-  - **Products component:** Responsible for showing all the products with pagination, and includes the functionality for searching for items, applying filters by categories, and sorting products by:
-    - Price: Low to High
-    - Price: High to Low
-    - Most Rating
-    - Product Title
+## 🧩 Components
 
-## Routing
+### 🔁 Shared Components
 
-The application uses React Router for client-side routing. Here are the main routes:
+- **Header** – Navigation bar with links.
+- **Card** – Displays each product.
+- **ProductRating** – Visual rating component.
+- **HeroImg** – Large banner image.
+- **Footer** – Basic site footer.
 
-- `/`: Home page displaying a list of categories.
-- `/:categoryName`: Products listing according to the selected category.
-- `/:categoryName/:id`: Product details based on the selected product.
-- `/products`: Listing of all products.
-- `/login`: Displays the login page.
-- `/userCart`: Displays the user's cart items page.
+### 📄 Page Components
 
-## Data Management
+- **Home** – Categories and featured products.
+- **Products** – Displays all products with:
+  - Pagination
+  - Category filter
+  - Sort (price, rating, title)
+  - Search input
+- **Categories** – Products by selected category.
+- **Product** – Product details page.
+- **Login** – User login using dummy API.
+- **UserProfile** – Shows logged-in user info.
+- **Cart** – Shows items in user’s cart with update/delete.
 
-The E-commerce Website manages item data using React State, the Context API, and makes API calls to retrieve item information from a [backend server](https://dummyjson.com).
+---
 
-## Cart Context
+## 🌐 Routing
 
-The Cart Context is responsible for managing the user's login status and handling the login and logout processes. It also retrieves user information and manages the user's cart, allowing for updates and deletions of cart items. This context is utilized throughout the application to ensure a consistent user experience.
+React Router handles routing:
 
-### Features:
-- **User Login Status:** Tracks whether the user is logged in or not.
-- **User Information:** Retrieves and stores user details after login.
-- **Cart Management:** 
-  - **Add Items:** Allows users to add items to their cart.
-  - **Update Items:** Enables updating the quantity of items in the cart.
-  - **Delete Items:** Allows for the removal of items from the cart.
-- **Logout Functionality:** Handles user logout, resetting the user login status and clearing any user-related data.
+| Path | Description |
+|------|-------------|
+| `/` | Home page |
+| `/products` | All products |
+| `/login` | Login page |
+| `/userProfile` | User info (protected) |
+| `/userCart` | Cart (protected) |
+| `/:categoryName` | Products by category |
+| `/:categoryName/:id` | Product details |
 
-### Usage:
-The Cart Context can be accessed in any component that needs to manage cart-related functionalities, providing a centralized way to handle user cart data throughout the application.
+---
 
+## 🔧 Data Management
 
-## Styling
+Uses **Redux** to manage user and cart state.
 
-Styling is achieved using MUI components by customizing them to create a visually appealing user interface.
+### 🧠 User Slice
 
-## Additional Resources
+- Handles login/logout
+- Stores user info
+- Makes user data accessible in `UserProfile`
 
-**API Links:**
+### 🛒 Cart Slice
 
-- [List of all Products](https://dummyjson.com/products?limit=0)
-- [Details of a Product](https://dummyjson.com/products/1)
-- [List of products according to category](https://dummyjson.com/products/category/categorName)
-- [Login Request](https://dummyjson.com/auth/login)
-- [Getting User Info](https://dummyjson.com/auth/me)
-- [Getting Category List](https://dummyjson.com/products/category-list)
-- [Search for Products](https://dummyjson.com/products/search?limit=0&q=searchKeyWord)
+- Add/update/remove items from cart
+- Syncs with `localStorage` for persistence
 
-These links provide access to various endpoints of the backend server, allowing the retrieval of items and user information.
+> Cart data is stored locally due to the API’s limitations.
 
-## Contact
+---
 
-For any inquiries or feedback, feel free to reach out via email at shaheerasarama@gmail.com.
+## 🎯 Cart Context
+
+Used for managing login and cart access globally.
+
+### 📌 Features
+
+- Stores user login state
+- Stores user information
+- Cart operations:
+  - Add item
+  - Update quantity
+  - Remove item
+- Logout clears user and cart data
+
+### 📦 Usage
+
+All components can access cart/user data via context. Helps maintain centralized state control and UI updates.
+
+---
+
+## 🎨 Styling
+
+Uses **Material-UI (MUI)** for styling:
+
+- Fully responsive layout
+- Customized components for cards, buttons, inputs, etc.
+- Typography, spacing, and UI behavior adapted for modern e-commerce UX
+
+---
+
+## 📚 API Resources
+
+Data is fetched from [DummyJSON](https://dummyjson.com).
+
+| Resource | Endpoint |
+|----------|----------|
+| All Products | [https://dummyjson.com/products?limit=0](https://dummyjson.com/products?limit=0) |
+| Product Details | [https://dummyjson.com/products/1](https://dummyjson.com/products/1) |
+| By Category | [https://dummyjson.com/products/category/{categoryName}](https://dummyjson.com/products/category/categorName) |
+| Category List | [https://dummyjson.com/products/category-list](https://dummyjson.com/products/category-list) |
+| Search | [https://dummyjson.com/products/search?q=term](https://dummyjson.com/products/search?limit=0&q=searchKeyWord) |
+| Login | [https://dummyjson.com/auth/login](https://dummyjson.com/auth/login) |
+| Authenticated User | [https://dummyjson.com/auth/me](https://dummyjson.com/auth/me) |
+
+---
+
+## 📬 Contact
+
+If you have any questions or suggestions, feel free to reach out:  
+📧 **shaheerasarama@gmail.com**
+
+---
